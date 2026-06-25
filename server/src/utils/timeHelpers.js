@@ -1,6 +1,9 @@
 // e.g. "09:30" → 570
 
 export const timeToMinutes = (timeStr) => {
+  if (!timeStr || typeof timeStr !== "string") {
+    throw new Error(`timeToMinutes received invalid value: ${timeStr}`);
+  }
   const [hours, minutes] = timeStr.split(":").map(Number);
   return hours * 60 + minutes;
 };
