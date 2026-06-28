@@ -43,7 +43,7 @@ export const getLatestPunch = async (userId) => {
     .collection("attendance")
     .where("userId", "==", userId)
     .where("date", "==", date)
-    .orderBy("timestamp", "asc")
+    .orderBy("timestamp", "desc")
     .limit(1)
     .get();
 
@@ -78,7 +78,7 @@ export const getDailySummary = async (userId, date) => {
 
   if (!doc.exists) return null;
 
-  return { id: docId, ...doc.data() };
+  return { id: doc.id, ...doc.data() };
 };
 
 // Fetches weekly summaries for a user
@@ -105,9 +105,7 @@ export const computeAndSaveSummary = async (userId, schedule) => {
   const punchOut = punches.find((p) => p.type === "out");
 
   if (!punchIn || !punchOut) {
-    throw new Error(
-      "Incomplete punch data - need both punch in and punch out.",
-    );
+    throw new Error("Incomplete punch data — need both punch in and punch out");
   }
 
   const summary = computeFromFirestorePunches(punchIn, punchOut, schedule);

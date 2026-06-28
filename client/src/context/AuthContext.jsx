@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../services/firebase/firebaseConfig.js";
 
-const authContext = createContext(null);
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         const userDoc = await getDoc(doc(db, "users", user.uid));
 
         if (userDoc.exists()) {
-          setUserProfile(userDoc.data);
+          setUserProfile(userDoc.data());
         }
       } else {
         setUserProfile(null);
