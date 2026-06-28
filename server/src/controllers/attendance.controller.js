@@ -19,9 +19,7 @@ export const getStatusHandler = async (req, res) => {
       lastPunch: latest || null,
     });
   } catch (error) {
-    res.status(500).json({
-      error: "error.message",
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -50,25 +48,18 @@ export const punchHandler = async (req, res) => {
       const schedule = userDoc.data()?.schedule;
 
       if (!schedule) {
-        res.status(400).json({
-          error: "User schedule not found.",
-        });
+        return res.status(400).json({ error: "User schedule not found." });
       }
 
       const summary = await computeAndSaveSummary(userId, schedule);
-      return res.json({
-        punch,
-        summary,
-      });
-
-      res.json({ punch });
+      return res.json({ punch, summary });
     }
+
+    return res.json({ punch });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
-// Returns daily summary for the logged-in user
 
 export const getDailySummaryHandler = async (req, res) => {
   try {
@@ -76,7 +67,7 @@ export const getDailySummaryHandler = async (req, res) => {
     const summary = await getDailySummary(req.user.uid, date);
 
     if (!summary) {
-      res.status(404).json({ error: "No summary found for this date" });
+      return res.status(404).json({ error: "No summary found for this date" }); // ← add return
     }
 
     res.json(summary);
@@ -85,14 +76,14 @@ export const getDailySummaryHandler = async (req, res) => {
   }
 };
 
-// Returns weekly summaries for the logged-in user
-
 export const getWeeklySummaryHandler = async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
 
     if (!startDate || !endDate) {
-      res.status(400).json({ error: "startDate and endDate are required" });
+      return res
+        .status(400)
+        .json({ error: "startDate and endDate are required" });
     }
 
     const summaries = await getWeeklySummary(req.user.uid, startDate, endDate);
@@ -102,14 +93,12 @@ export const getWeeklySummaryHandler = async (req, res) => {
   }
 };
 
-// Returns raw punches for the logged-in user on a date
-
 export const getPunchesHandler = async (req, res) => {
   try {
     const date = req.query.date || getTodayDate();
     const punches = await getPunchesByDate(req.user.uid, date);
     res.json(punches);
   } catch (error) {
-    res.json(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
