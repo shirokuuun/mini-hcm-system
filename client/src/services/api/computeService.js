@@ -1,5 +1,5 @@
 import axios from "axios";
-import { auth } from "../firebase/authService.js";
+import { auth } from "../firebase/firebaseConfig.js";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -22,7 +22,7 @@ export const punchOut = async () => {
   const headers = await getAuthHeaders();
   const { data } = await axios.post(
     `${API_URL}/attendance/punch`,
-    { type: "out " },
+    { type: "out" },
     { headers },
   );
   return data;

@@ -6,7 +6,13 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "./firebaseConfig.js";
 
-export const registerUser = async (name, email, password, role, schedule) => {
+export const registerUser = async ({
+  name,
+  email,
+  password,
+  role,
+  schedule,
+}) => {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
 
   await setDoc(doc(db, "users", user.uid), {
