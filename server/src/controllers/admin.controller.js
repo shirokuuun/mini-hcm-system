@@ -55,7 +55,7 @@ export const getWeeklyReportHandler = async (req, res) => {
 
 export const updatePunchHandler = async (req, res) => {
   try {
-    const { punchId } = req.params;
+    const { id } = req.params;
     const updates = req.body;
 
     const result = await updatePunch(punchId, updates);
