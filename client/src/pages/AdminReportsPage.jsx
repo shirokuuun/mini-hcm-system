@@ -50,13 +50,13 @@ const AdminReportsPage = () => {
   return (
     <div className="text-white px-6 py-8 max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Reports</h1>
+        <h1 className="text-3xl text-black/70 font-bold">Reports</h1>
         <p className="text-gray-400 mt-1">
           Daily and weekly attendance reports
         </p>
       </div>
 
-      <div className="bg-gray-900 rounded-xl p-5 mb-6 border border-gray-800">
+      <div className="bg-white rounded-xl p-5 mb-6 border border-gray-500/40">
         <div className="flex flex-wrap gap-4 items-end">
           <div>
             <label className="block text-gray-400 text-sm mb-1">
@@ -67,7 +67,7 @@ const AdminReportsPage = () => {
                 onClick={() => setReportType("daily")}
                 className={`px-4 py-2 text-sm font-medium transition-colors ${
                   reportType === "daily"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-gray-600 text-white"
                     : "bg-gray-800 text-gray-400 hover:text-white"
                 }`}
               >
@@ -77,7 +77,7 @@ const AdminReportsPage = () => {
                 onClick={() => setReportType("weekly")}
                 className={`px-4 py-2 text-sm font-medium transition-colors ${
                   reportType === "weekly"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-gray-600 text-white"
                     : "bg-gray-800 text-gray-400 hover:text-white"
                 }`}
               >
@@ -126,7 +126,7 @@ const AdminReportsPage = () => {
           <button
             onClick={fetchReport}
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-sm"
+            className="bg-green-600 hover:bg-green-900 disabled:opacity-50 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-sm"
           >
             {loading ? "Loading..." : "Generate Report"}
           </button>
@@ -139,7 +139,7 @@ const AdminReportsPage = () => {
             No data found for the selected period.
           </div>
         ) : (
-          <div className="bg-gray-900 rounded-xl overflow-hidden">
+          <div className="bg-white border border-gray-500/40 rounded-xl overflow-hidden">
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-gray-400 border-b border-gray-800">
@@ -160,23 +160,25 @@ const AdminReportsPage = () => {
                     key={row.id}
                     className="border-b border-gray-800 hover:bg-gray-800/50"
                   >
-                    <td className="px-4 py-3 text-white font-medium">
+                    <td className="px-4 py-3 text-gray-500 font-medium">
                       {getEmployeeName(row.userId)}
                     </td>
-                    <td className="px-4 py-3 text-gray-300">{row.date}</td>
+                    <td className="px-4 py-3 text-gray-500">{row.date}</td>
                     <td className="px-4 py-3 text-green-400">{row.punchIn}</td>
                     <td className="px-4 py-3 text-red-400">{row.punchOut}</td>
-                    <td className="px-4 py-3">{row.regularHours}h</td>
-                    <td className="px-4 py-3 text-yellow-400">
+                    <td className="px-4 py-3 text-gray-500">
+                      {row.regularHours}h
+                    </td>
+                    <td className="px-4 py-3 text-gray-500">
                       {row.overtimeHours}h
                     </td>
-                    <td className="px-4 py-3 text-purple-400">
+                    <td className="px-4 py-3 text-gray-500">
                       {row.nightDifferentialHours}h
                     </td>
-                    <td className="px-4 py-3 text-red-400">
+                    <td className="px-4 py-3 text-gray-500">
                       {formatMinutes(row.lateMinutes)}
                     </td>
-                    <td className="px-4 py-3 text-orange-400">
+                    <td className="px-4 py-3 text-red-500">
                       {formatMinutes(row.undertimeMinutes)}
                     </td>
                   </tr>

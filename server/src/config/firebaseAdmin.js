@@ -1,6 +1,7 @@
 import { initializeApp, cert, getApps } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
+import * as admin from "firebase-admin";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
@@ -21,4 +22,4 @@ if (!getApps().length) {
 const db = getFirestore();
 const auth = getAuth();
 
-export { db, auth };
+export { admin, db, auth };

@@ -74,20 +74,20 @@ const AttendancePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white px-4 py-10">
+    <div className="min-h-screen bg-white text-white px-4 py-10">
       <div className="max-w-lg mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Time Attendance</h1>
+          <h1 className="text-3xl text-black/70 font-bold">Time Attendance</h1>
           <p className="text-gray-400 mt-1">
             Welcome, {userProfile?.name || "Employee"}
           </p>
         </div>
 
-        <div className="bg-gray-900 rounded-2xl p-8 text-center mb-6">
-          <p className="text-gray-400 text-sm mb-1">
+        <div className="bg-white border border-gray-500/40 rounded-2xl p-8 text-center mb-6">
+          <p className="text-black/70 text-sm mb-1">
             {formatDate(currentTime)}
           </p>
-          <p className="text-5xl font-bold text-white tracking-widest">
+          <p className="text-5xl font-bold text-black/70 tracking-widest">
             {formatTime(currentTime)}
           </p>
           <p className="text-gray-500 text-sm mt-3">
@@ -99,10 +99,10 @@ const AttendancePage = () => {
           <span
             className={`px-4 py-1.5 rounded-full text-sm font-semibold ${
               status === "in"
-                ? "bg-green-500/20 text-green-400 border border-green-500"
+                ? "bg-green-300/20 text-green-400 border border-green-500"
                 : status === "out"
-                  ? "bg-red-500/20 text-red-400 border border-red-500"
-                  : "bg-gray-700 text-gray-400"
+                  ? "bg-red-300/20 text-red-400 border border-red-500"
+                  : "bg-white border border-gray-500/40 text-gray-400"
             }`}
           >
             {status === "in"
@@ -114,12 +114,12 @@ const AttendancePage = () => {
         </div>
 
         {message && (
-          <div className="mb-4 bg-green-500/10 border border-green-500 text-green-400 px-4 py-3 rounded-lg text-sm text-center">
+          <div className="mb-4 bg-white border border-green-500 text-green-400 px-4 py-3 rounded-lg text-sm text-center">
             {message}
           </div>
         )}
         {error && (
-          <div className="mb-4 bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded-lg text-sm text-center">
+          <div className="mb-4 bg-white border border-red-500 text-red-400 px-4 py-3 rounded-lg text-sm text-center">
             {error}
           </div>
         )}

@@ -95,17 +95,17 @@ const AdminDashboardPage = () => {
   return (
     <div className="text-white px-6 py-8 max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <p className="text-gray-400 mt-1">Employee attendance overview</p>
+        <h1 className="text-3xl text-black/70 font-bold">Admin Dashboard</h1>
+        <p className="text-gray-500 mt-1">Employee attendance overview</p>
       </div>
 
       <div className="flex items-center gap-3 mb-6">
-        <label className="text-gray-400 text-sm">Date:</label>
+        <label className="text-gray-500 text-sm">Date:</label>
         <input
           type="date"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          className="bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+          className="bg-white text-gray-500 border border-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
         />
       </div>
 
@@ -120,16 +120,16 @@ const AdminDashboardPage = () => {
       ) : (
         <>
           <div className="mb-10">
-            <h2 className="text-lg font-semibold text-gray-300 mb-4">
+            <h2 className="text-lg font-semibold text-gray-500 mb-4">
               Daily Report — {selectedDate}
             </h2>
 
             {report.length === 0 ? (
-              <div className="bg-gray-900 rounded-xl p-6 text-center text-gray-500">
+              <div className="bg-white text-gray-500 border border-gray-500 rounded-xl p-6 text-center">
                 No attendance data for this date.
               </div>
             ) : (
-              <div className="bg-gray-900 rounded-xl overflow-hidden">
+              <div className="bg-white text-gray-500 border border-gray-500 rounded-xl overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="text-gray-400 border-b border-gray-800">
@@ -146,11 +146,8 @@ const AdminDashboardPage = () => {
                   </thead>
                   <tbody>
                     {report.map((row) => (
-                      <tr
-                        key={row.id}
-                        className="border-b border-gray-800 hover:bg-gray-800/50"
-                      >
-                        <td className="px-4 py-3 text-white font-medium">
+                      <tr key={row.id} className="border-b border-gray-800">
+                        <td className="px-4 py-3 text-gray-500 font-medium">
                           {getEmployeeName(row.userId)}
                         </td>
                         <td className="px-4 py-3 text-green-400">
@@ -160,29 +157,52 @@ const AdminDashboardPage = () => {
                           {row.punchOut}
                         </td>
                         <td className="px-4 py-3">{row.regularHours}h</td>
-                        <td className="px-4 py-3 text-yellow-400">
-                          {row.overtimeHours}h
-                        </td>
-                        <td className="px-4 py-3 text-purple-400">
+                        <td className="px-4 py-3">{row.overtimeHours}h</td>
+                        <td className="px-4 py-3 0">
                           {row.nightDifferentialHours}h
                         </td>
-                        <td className="px-4 py-3 text-red-400">
+                        <td className="px-4 py-3 ">
                           {formatMinutes(row.lateMinutes)}
                         </td>
-                        <td className="px-4 py-3 text-orange-400">
+                        <td className="px-4 py-3 text-red-500 ">
                           {formatMinutes(row.undertimeMinutes)}
                         </td>
+
                         <td className="px-4 py-3">
                           <div className="flex gap-2">
-                            {punches[row.userId]?.map((punch) => (
-                              <button
-                                key={punch.id}
-                                onClick={() => handleEditPunch(punch)}
-                                className="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs transition-colors"
-                              >
-                                Edit {punch.type}
-                              </button>
-                            ))}
+                            {(() => {
+                              const userPunches = punches[row.userId] || [];
+                              const firstPunchIn = userPunches.find(
+                                (p) => p.type === "in",
+                              );
+                              const lastPunchOut = [...userPunches]
+                                .reverse()
+                                .find((p) => p.type === "out");
+                              return (
+                                <>
+                                  {firstPunchIn && (
+                                    <button
+                                      onClick={() =>
+                                        handleEditPunch(firstPunchIn)
+                                      }
+                                      className="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs transition-colors"
+                                    >
+                                      Edit In
+                                    </button>
+                                  )}
+                                  {lastPunchOut && (
+                                    <button
+                                      onClick={() =>
+                                        handleEditPunch(lastPunchOut)
+                                      }
+                                      className="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs transition-colors"
+                                    >
+                                      Edit Out
+                                    </button>
+                                  )}
+                                </>
+                              );
+                            })()}
                           </div>
                         </td>
                       </tr>
@@ -194,24 +214,24 @@ const AdminDashboardPage = () => {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold text-gray-300 mb-4">
+            <h2 className="text-lg font-semibold text-gray-500 mb-4">
               Employees
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {employees.map((emp) => (
                 <div
                   key={emp.id}
-                  className="bg-gray-900 rounded-xl p-5 border border-gray-800"
+                  className="bg-white text-gray-500 border border-gray-500 rounded-xl p-5 "
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-white font-semibold">{emp.name}</p>
+                      <p className="text-gray-700 font-semibold">{emp.name}</p>
                       <p className="text-gray-500 text-sm">{emp.email}</p>
                       <p className="text-gray-500 text-xs mt-1">
                         Shift: {emp.schedule?.start} – {emp.schedule?.end}
                       </p>
                     </div>
-                    <span className="bg-blue-500/20 text-blue-400 border border-blue-500 px-2 py-1 rounded text-xs">
+                    <span className="bg-gray-700 hover:bg-gray-600 text-white border border-gray-500 px-2 py-1 rounded text-xs">
                       {emp.role}
                     </span>
                   </div>
