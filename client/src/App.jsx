@@ -6,10 +6,12 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import AttendancePage from "./pages/AttendancePage.jsx";
 import AdminDashboardPage from "./pages/AdminDashboardPage.jsx";
+import AdminReportsPage from "./pages/AdminReportsPage.jsx";
 import ProtectedRoute from "./components/layout/ProtectedRoutes.jsx";
+import Layout from "./components/layout/Layout.jsx";
 
 const App = () => {
-  const { currentUser, isAdmin } = useAuth();
+  const { currentUser } = useAuth();
 
   return (
     <Routes>
@@ -19,13 +21,18 @@ const App = () => {
 
       {/*Protected path authorized users can access*/}
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/attendance" element={<AttendancePage />} />
+        <Route element={<Layout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/attendance" element={<AttendancePage />} />
+        </Route>
       </Route>
 
       {/*Admin only path*/}
       <Route element={<ProtectedRoute adminOnly />}>
-        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route element={<Layout />}>
+          <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/admin/reports" element={<AdminReportsPage />} />
+        </Route>
       </Route>
 
       {/*Default redirect*/}
@@ -35,6 +42,8 @@ const App = () => {
           currentUser ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
         }
       />
+
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };
