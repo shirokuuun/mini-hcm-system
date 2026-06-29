@@ -47,5 +47,5 @@ export const extractTime = (timestamp) => {
 export const getTodayDate = () => {
   return new Date().toLocaleDateString("en-CA", {
     timeZone: "Asia/Manila",
-  }); // returns "YYYY-MM-DD"
+  });
 };

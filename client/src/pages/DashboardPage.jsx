@@ -28,11 +28,15 @@ const DashboardPage = () => {
     const fetchData = async () => {
       try {
         const today = new Date();
-        const todayStr = today.toISOString().split("T")[0];
+        const todayStr = new Date().toLocaleDateString("en-CA", {
+          timeZone: "Asia/Manila",
+        });
 
         const startDate = new Date();
-        startDate.setDate(today.getDate() - 6);
-        const startStr = startDate.toISOString().split("T")[0];
+        startDate.setDate(startDate.getDate() - 6);
+        const startStr = startDate.toLocaleDateString("en-CA", {
+          timeZone: "Asia/Manila",
+        });
 
         const [dailyData, weeklyData] = await Promise.all([
           getDailySummary(todayStr).catch(() => null),
