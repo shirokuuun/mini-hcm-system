@@ -42,17 +42,19 @@ export const updatePunch = async (punchId, updates) => {
   const doc = await ref.get();
 
   if (!doc.exists) {
-    throw new Error(`Punch ${punchId} not found.`);
+    throw new Error(`Punch ${punchId} not found`);
   }
 
   const updatedData = {
     ...updates,
+    ...(updates.timestamp && {
+      timestamp: new Date(updates.timestamp),
+    }),
     updatedAt: new Date(),
     updatedBy: "admin",
   };
 
   await ref.update(updatedData);
-
   return { id: punchId, ...doc.data(), ...updatedData };
 };
 
