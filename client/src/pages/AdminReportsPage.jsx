@@ -7,7 +7,11 @@ import {
 
 const AdminReportsPage = () => {
   const [reportType, setReportType] = useState("daily");
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [date, setDate] = useState(
+    new Date().toLocaleDateString("en-CA", {
+      timeZone: "Asia/Manila",
+    }),
+  );
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [report, setReport] = useState([]);

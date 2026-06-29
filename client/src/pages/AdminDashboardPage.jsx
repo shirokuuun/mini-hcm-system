@@ -10,7 +10,9 @@ const AdminDashboardPage = () => {
   const [employees, setEmployees] = useState([]);
   const [report, setReport] = useState([]);
   const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split("T")[0],
+    new Date().toLocaleDateString("en-CA", {
+      timeZone: "Asia/Manila",
+    }),
   );
   const [loading, setLoading] = useState(true);
   const [punches, setPunches] = useState({});
@@ -55,9 +57,15 @@ const AdminDashboardPage = () => {
 
   const handleEditPunch = (punch) => {
     setEditingPunch(punch);
-    const time = punch.timestamp?.toDate
-      ? punch.timestamp.toDate().toTimeString().slice(0, 5)
-      : new Date(punch.timestamp).toTimeString().slice(0, 5);
+    const date = punch.timestamp?.toDate
+      ? punch.timestamp.toDate()
+      : new Date(punch.timestamp);
+    const time = date.toLocaleTimeString("en-PH", {
+      timeZone: "Asia/Manila",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
     setEditValue(time);
   };
 
@@ -66,19 +74,16 @@ const AdminDashboardPage = () => {
     setSaving(true);
     try {
       const [hours, minutes] = editValue.split(":").map(Number);
-      const newTimestamp = new Date();
-      newTimestamp.setHours(hours, minutes, 0, 0);
 
-      console.log("Updating punch:", editingPunch.id, {
-        timestamp: newTimestamp,
-      });
+      const [year, month, day] = selectedDate.split("-").map(Number);
+      const manilaDateStr = `${selectedDate}T${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:00+08:00`;
+      const newTimestamp = new Date(manilaDateStr);
+
       await updatePunch(editingPunch.id, { timestamp: newTimestamp });
       setMessage("Punch updated successfully.");
       setEditingPunch(null);
       fetchData();
     } catch (err) {
-      console.error("Update error:", err);
-      console.error("Update error response:", err.response?.data);
       setMessage("Failed to update punch.");
     } finally {
       setSaving(false);

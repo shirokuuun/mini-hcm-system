@@ -97,9 +97,9 @@ export const getWeeklySummary = async (userId, startDate, endDate) => {
 
 // Computes and saves daily summary from today's punches
 
-export const computeAndSaveSummary = async (userId, schedule) => {
-  const date = getTodayDate();
-  const punches = await getPunchesByDate(userId, date);
+export const computeAndSaveSummary = async (userId, schedule, date = null) => {
+  const targetDate = date || getTodayDate();
+  const punches = await getPunchesByDate(userId, targetDate);
 
   const punchIn = punches.find((p) => p.type === "in");
   const punchOut = punches.find((p) => p.type === "out");
@@ -109,7 +109,7 @@ export const computeAndSaveSummary = async (userId, schedule) => {
   }
 
   const summary = computeFromFirestorePunches(punchIn, punchOut, schedule);
-  const saved = await saveDailySummary(userId, date, summary);
+  const saved = await saveDailySummary(userId, targetDate, summary);
 
   return saved;
 };

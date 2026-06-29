@@ -54,33 +54,24 @@ export const getWeeklyReportHandler = async (req, res) => {
 // Updates a punch document (admin)
 
 export const updatePunchHandler = async (req, res) => {
-  console.log("Update punch called:", req.params.id, req.body);
   try {
-    const { id } = req.params;
+    const { punchId } = req.params;
     const updates = req.body;
 
-    if (!updates || Object.keys(updates).length === 0) {
-      return res.status(400).json({ error: "No update data provided" });
+    const result = await updatePunch(punchId, updates);
+
+    const punchDoc = await db.collection("attendance").doc(punchId).get();
+    const { userId, date } = punchDoc.data();
+    const userDoc = await db.collection("users").doc(userId).get();
+    const schedule = userDoc.data()?.schedule;
+
+    if (schedule) {
+      await computeAndSaveSummary(userId, schedule, date);
     }
 
-    const updated = await updatePunch(id, updates);
-
-    const punchDoc = await db.collection("attendance").doc(id).get();
-    const userId = punchDoc.data()?.userId;
-    const date = punchDoc.data()?.date;
-
-    if (userId && date) {
-      const userDoc = await db.collection("users").doc(userId).get();
-      const schedule = userDoc.data()?.schedule;
-      if (schedule) {
-        await computeAndSaveSummary(userId, schedule);
-      }
-    }
-
-    return res.json(updated);
+    res.json(result);
   } catch (error) {
-    console.error("Update punch error:", error);
-    return res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
