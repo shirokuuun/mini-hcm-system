@@ -4,15 +4,15 @@ A lightweight Human Capital Management (HCM) system for recording employee time-
 
 ## Live Demo
 
-- **Frontend:** [Firebase Hosting URL] ← update after deployment
-- **Backend:** [Render URL] ← update after deployment
+- **Frontend:** [https://hcm-time-tracking-f1a8c.web.app] ← update after deployment
+- **Backend:** [https://mini-hcm-system.onrender.com] ← update after deployment
 
 ## Test Accounts
 
-| Role     | Email         | Password        |
-| -------- | ------------- | --------------- |
-| Admin    | admin@hcm.com | [your password] |
-| Employee | test@hcm.com  | [your password] |
+| Role     | Email         | Password      |
+| -------- | ------------- | ------------- |
+| Admin    | admin@hcm.com | [password123] |
+| Employee | test@hcm.com  | [password]    |
 
 > **Note:** The backend is hosted on Render's free tier. If the app feels slow on first load, wait 30 seconds for the server to wake up and try again.
 
