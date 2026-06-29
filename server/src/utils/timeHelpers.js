@@ -34,17 +34,18 @@ export const minutesBetween = (startTime, endTime) => {
 
 export const extractTime = (timestamp) => {
   const date = timestamp?.toDate ? timestamp.toDate() : new Date(timestamp);
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  return `${hours}:${minutes}`;
+  return date.toLocaleTimeString("en-PH", {
+    timeZone: "Asia/Manila",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 };
 
 // Gets today's date as YYYY-MM-DD
 
 export const getTodayDate = () => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  return new Date().toLocaleDateString("en-CA", {
+    timeZone: "Asia/Manila",
+  }); // returns "YYYY-MM-DD"
 };

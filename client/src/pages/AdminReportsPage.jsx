@@ -135,7 +135,7 @@ const AdminReportsPage = () => {
 
       {fetched &&
         (report.length === 0 ? (
-          <div className="bg-gray-900 rounded-xl p-6 text-center text-gray-500">
+          <div className="bg-white border border-gray-500/40 rounded-xl p-6 text-center text-black">
             No data found for the selected period.
           </div>
         ) : (
