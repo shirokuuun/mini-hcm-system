@@ -52,3 +52,52 @@ export const getWeeklySummary = async (startDate, endDate) => {
   });
   return data;
 };
+
+{
+  /* Admin api calls */
+}
+
+export const getEmployees = async () => {
+  const headers = await getAuthHeaders();
+  const { data } = await axios.get(`${API_URL}/admin/employees`, {
+    headers,
+  });
+  return data;
+};
+
+export const getAdminDailyReport = async (date) => {
+  const headers = await getAuthHeaders();
+  const { data } = await axios.get(`${API_URL}/admin/reports/daily`, {
+    headers,
+    params: { date },
+  });
+  return data;
+};
+
+export const getAdminWeeklyReport = async (startDate, endDate) => {
+  const headers = await getAuthHeaders();
+  const { data } = await axios.get(`${API_URL}/admin/reports/weekly`, {
+    headers,
+    params: { startDate, endDate },
+  });
+  return data;
+};
+
+export const getEmployeePunches = async (userId, date) => {
+  const headers = await getAuthHeaders();
+  const { data } = await axios.get(`${API_URL}/admin/punches`, {
+    headers,
+    params: { userId, date },
+  });
+  return data;
+};
+
+export const updatePunch = async (punchId, updates) => {
+  const headers = await getAuthHeaders();
+  const { data } = await axios.patch(
+    `${API_URL}/admin/punch/${punchId}`,
+    updates,
+    { headers },
+  );
+  return data;
+};
