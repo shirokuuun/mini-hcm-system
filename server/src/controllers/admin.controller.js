@@ -58,19 +58,30 @@ export const updatePunchHandler = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
 
-    const result = await updatePunch(punchId, updates);
+    console.log("Update punch called:", id, updates);
 
-    const punchDoc = await db.collection("attendance").doc(punchId).get();
+    const result = await updatePunch(id, updates);
+    console.log("updatePunch done");
+
+    const punchDoc = await db.collection("attendance").doc(id).get();
+    console.log("punchDoc exists:", punchDoc.exists);
+
     const { userId, date } = punchDoc.data();
+    console.log("userId:", userId, "date:", date);
+
     const userDoc = await db.collection("users").doc(userId).get();
     const schedule = userDoc.data()?.schedule;
+    console.log("schedule:", schedule);
 
     if (schedule) {
       await computeAndSaveSummary(userId, schedule, date);
+      console.log("summary recomputed");
     }
 
     res.json(result);
   } catch (error) {
+    console.error("updatePunchHandler error:", error.message);
+    console.error(error.stack);
     res.status(500).json({ error: error.message });
   }
 };
