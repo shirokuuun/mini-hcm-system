@@ -5,6 +5,8 @@ import {
   updatePunch,
   getEmployeePunches,
 } from "../services/adminService.js";
+import { computeAndSaveSummary } from "../services/attendanceService.js";
+import { db } from "../config/firebaseAdmin.js";
 import { getTodayDate } from "../utils/timeHelpers.js";
 
 // Returns all employees
@@ -52,6 +54,7 @@ export const getWeeklyReportHandler = async (req, res) => {
 // Updates a punch document (admin)
 
 export const updatePunchHandler = async (req, res) => {
+  console.log("Update punch called:", req.params.id, req.body);
   try {
     const { id } = req.params;
     const updates = req.body;
@@ -59,10 +62,25 @@ export const updatePunchHandler = async (req, res) => {
     if (!updates || Object.keys(updates).length === 0) {
       return res.status(400).json({ error: "No update data provided" });
     }
+
+    const updated = await updatePunch(id, updates);
+
+    const punchDoc = await db.collection("attendance").doc(id).get();
+    const userId = punchDoc.data()?.userId;
+    const date = punchDoc.data()?.date;
+
+    if (userId && date) {
+      const userDoc = await db.collection("users").doc(userId).get();
+      const schedule = userDoc.data()?.schedule;
+      if (schedule) {
+        await computeAndSaveSummary(userId, schedule);
+      }
+    }
+
+    return res.json(updated);
   } catch (error) {
-    res.status(500).json({
-      error: error.message,
-    });
+    console.error("Update punch error:", error);
+    return res.status(500).json({ error: error.message });
   }
 };
 
