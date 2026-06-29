@@ -44,10 +44,10 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-gray-900 rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-white border border-gray-500/40 rounded-2xl shadow-xl p-8">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-white">Create Account</h1>
+          <h1 className="text-3xl font-bold text-black/70">Create Account</h1>
           <p className="text-gray-400 mt-1">Join the HCM System</p>
         </div>
 
@@ -59,7 +59,7 @@ const RegisterPage = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-400 mb-1">
+            <label className="block text-sm text-gray-500 mb-1">
               Full Name
             </label>
             <input
@@ -68,44 +68,44 @@ const RegisterPage = () => {
               value={form.name}
               onChange={handleChange}
               required
-              className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
+              className="w-full bg-white text-black/60 border border-gray-500/40 rounded-lg px-4 py-2.5 focus:outline-none focus:border-gray-700"
               placeholder="Juan dela Cruz"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Email</label>
+            <label className="block text-sm text-gray-500 mb-1">Email</label>
             <input
               type="email"
               name="email"
               value={form.email}
               onChange={handleChange}
               required
-              className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
+              className="w-full bg-white text-black/60 border border-gray-500/40 rounded-lg px-4 py-2.5 focus:outline-none focus:border-gray-700"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Password</label>
+            <label className="block text-sm text-gray-500 mb-1">Password</label>
             <input
               type="password"
               name="password"
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
+              className="w-full bg-white text-black/60 border border-gray-500/40 rounded-lg px-4 py-2.5 focus:outline-none focus:border-gray-700"
               placeholder="••••••••"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Role</label>
+            <label className="block text-sm text-gray-500 mb-1">Role</label>
             <select
               name="role"
               value={form.role}
               onChange={handleChange}
-              className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
+              className="w-full bg-white text-black/60 border border-gray-500/40 rounded-lg px-4 py-2.5 focus:outline-none focus:border-gray-700"
             >
               <option value="employee">Employee</option>
               <option value="admin">Admin</option>
@@ -114,7 +114,7 @@ const RegisterPage = () => {
 
           <div className="flex gap-3">
             <div className="flex-1">
-              <label className="block text-sm text-gray-400 mb-1">
+              <label className="block text-sm text-gray-500 mb-1">
                 Shift Start
               </label>
               <input
@@ -122,11 +122,11 @@ const RegisterPage = () => {
                 name="scheduleStart"
                 value={form.scheduleStart}
                 onChange={handleChange}
-                className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
+                className="w-full bg-white text-black/60 border border-gray-500/40 rounded-lg px-4 py-2.5 focus:outline-none focus:border-gray-700"
               />
             </div>
             <div className="flex-1">
-              <label className="block text-sm text-gray-400 mb-1">
+              <label className="block text-sm text-gray-500 mb-1">
                 Shift End
               </label>
               <input
@@ -134,7 +134,7 @@ const RegisterPage = () => {
                 name="scheduleEnd"
                 value={form.scheduleEnd}
                 onChange={handleChange}
-                className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
+                className="w-full bg-white text-black/60 border border-gray-500/40 rounded-lg px-4 py-2.5 focus:outline-none focus:border-gray-700"
               />
             </div>
           </div>
@@ -142,7 +142,7 @@ const RegisterPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-lg transition-colors mt-2"
+            className="w-full bg-gray-500 hover:bg-gray-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-lg transition-colors"
           >
             {loading ? "Creating account..." : "Create Account"}
           </button>

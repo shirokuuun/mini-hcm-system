@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../services/firebase/authService.js";
 
 const KPICard = ({ label, value, unit, color }) => (
-  <div className={`bg-gray-900 rounded-xl p-5 border ${color}`}>
-    <p className="text-gray-400 text-sm mb-1">{label}</p>
-    <p className="text-2xl font-bold text-white">
-      {value} <span className="text-sm font-normal text-gray-400">{unit}</span>
+  <div className={`bg-white rounded-xl p-5 border ${color}`}>
+    <p className="text-gray-500 text-sm mb-1">{label}</p>
+    <p className="text-2xl font-bold text-gray-600">
+      {value} <span className="text-sm font-normal text-gray-600">{unit}</span>
     </p>
   </div>
 );
@@ -64,30 +64,14 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white px-4 py-10">
+    <div className="min-h-screen bg-white text-white px-4 py-10">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-3xl font-bold">Dashboard</h1>
+            <h1 className="text-3xl text-black/70 font-bold">Dashboard</h1>
             <p className="text-gray-400 mt-1">
               Welcome back, {userProfile?.name || "Employee"}
             </p>
-          </div>
-          <div className="flex gap-3">
-            {/*
-            <button
-              onClick={() => navigate("/attendance")}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-            >
-              Attendance
-            </button>
-            <button
-              onClick={handleLogout}
-              className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-            >
-              Logout
-            </button>
-           */}
           </div>
         </div>
 
@@ -98,12 +82,12 @@ const DashboardPage = () => {
         {!loading && (
           <>
             <div className="mb-8">
-              <h2 className="text-lg font-semibold text-gray-300 mb-4">
+              <h2 className="text-lg font-semibold text-gray-500 mb-4">
                 Today's Summary
               </h2>
 
               {!summary ? (
-                <div className="bg-gray-900 rounded-xl p-6 text-center text-gray-500">
+                <div className="bg-white border border-gray-500/40 rounded-xl p-6 text-center text-gray-500">
                   No attendance data for today yet. Punch in to get started.
                 </div>
               ) : (
@@ -112,49 +96,49 @@ const DashboardPage = () => {
                     label="Regular Hours"
                     value={summary.regularHours ?? 0}
                     unit="hrs"
-                    color="border-blue-500/30"
+                    color="border-gray-500/40"
                   />
                   <KPICard
                     label="Overtime"
                     value={summary.overtimeHours ?? 0}
                     unit="hrs"
-                    color="border-yellow-500/30"
+                    color="border-gray-500/40"
                   />
                   <KPICard
                     label="Night Differential"
                     value={summary.nightDifferentialHours ?? 0}
                     unit="hrs"
-                    color="border-purple-500/30"
+                    color="border-gray-500/40"
                   />
                   <KPICard
                     label="Late"
                     value={formatMinutes(summary.lateMinutes)}
                     unit=""
-                    color="border-red-500/30"
+                    color="border-gray-500/40"
                   />
                   <KPICard
                     label="Undertime"
                     value={formatMinutes(summary.undertimeMinutes)}
                     unit=""
-                    color="border-orange-500/30"
+                    color="border-gray-500/40"
                   />
                   <KPICard
                     label="Punch In"
                     value={summary.punchIn ?? "--"}
                     unit=""
-                    color="border-green-500/30"
+                    color="border-gray-500/40"
                   />
                 </div>
               )}
             </div>
 
             <div>
-              <h2 className="text-lg font-semibold text-gray-300 mb-4">
+              <h2 className="text-lg font-semibold text-gray-500 mb-4">
                 Weekly History
               </h2>
 
               {weekly.length === 0 ? (
-                <div className="bg-gray-900 rounded-xl p-6 text-center text-gray-500">
+                <div className="bg-white border border-gray-500/40 rounded-xl p-6 text-center text-gray-500">
                   No weekly data available yet.
                 </div>
               ) : (
@@ -175,9 +159,9 @@ const DashboardPage = () => {
                       {weekly.map((day) => (
                         <tr
                           key={day.id}
-                          className="border-b border-gray-800 hover:bg-gray-800/50"
+                          className="border-b border-gray-500/40"
                         >
-                          <td className="px-4 py-3 text-gray-300">
+                          <td className="px-4 py-3 text-gray-500">
                             {day.date}
                           </td>
                           <td className="px-4 py-3 text-green-400">
@@ -187,13 +171,13 @@ const DashboardPage = () => {
                             {day.punchOut}
                           </td>
                           <td className="px-4 py-3">{day.regularHours}h</td>
-                          <td className="px-4 py-3 text-yellow-400">
+                          <td className="px-4 py-3 text-gray-500">
                             {day.overtimeHours}h
                           </td>
-                          <td className="px-4 py-3 text-red-400">
+                          <td className="px-4 py-3 text-gray-500">
                             {formatMinutes(day.lateMinutes)}
                           </td>
-                          <td className="px-4 py-3 text-orange-400">
+                          <td className="px-4 py-3 text-red-500">
                             {formatMinutes(day.undertimeMinutes)}
                           </td>
                         </tr>
